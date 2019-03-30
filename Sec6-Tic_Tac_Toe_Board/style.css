@@ -1,0 +1,32 @@
+
+h1 {
+	font-size: 48px;
+	text-align: center;
+}
+
+table {
+	/* Move this tbl to center of the page.  This is b/c the margin is 
+	   automatically increasing and decreasing when the window is resizing. */
+	margin: auto;
+}
+
+td {
+	height: 120px;
+	width: 120px;
+}
+
+td:hover {
+	border: 1px solid red;
+}
+
+.vertical {
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+
+.horizontal {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+
