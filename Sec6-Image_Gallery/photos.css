@@ -1,0 +1,22 @@
+
+
+img {
+	width: 30%;
+	float: left;
+
+	/* Add margin to each photo.  Since each photo is 30% box/row width, a row can fit 3 photos. Each photo has 2 margins - left & right.  So 6 margins occupies 10% of the row.  */
+	 margin:1.66%;
+}
+
+
+p {
+	font-family: 'Fira Sans', sans-serif;
+	font-family: 'Lobster', cursive;
+
+	/* Add a margin to the left of the box/row.  The width is 1.66% of the box row */
+	margin-left: 1.66%;
+
+	border-bottom: 2px solid gray;
+	padding: 10px;
+	width: 30%;
+}
