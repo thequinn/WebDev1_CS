@@ -1,0 +1,31 @@
+
+body {
+	padding-top: 70px;
+}
+
+.myFrame {
+	margin: 10px;
+	border: 10px solid #2c3e50;
+	padding: 5px;
+	background-color: lightblue;
+}
+
+.myBlock {
+	border: 2px solid grey;
+	background: #95b0db;
+}
+
+
+
+.navbar-inverse {
+  background: #2c3e50;
+  color: white;
+}
+
+.navbar-inverse .navbar-brand {
+	color: white;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: white;
+}
