@@ -1,0 +1,29 @@
+/* img {
+	width: 100%;
+} */
+
+/* div {
+	border: 1px solid black;
+	height: 100px;
+} */
+
+/* 
+- Problem: 
+-- In the grid system to display images of plants.  The 2nd row of the images skipped one col, and the 3rd row of the images skipped 2 col's.  
+
+- Cause:
+-- The height of the content makes each column a different height.
+
+- Solution:
+-- Make the columns the same height as the tallest column.  W/o this block below 
+-- More info: Varying Column Heights in Bootstrap by Carol Skelly, https://medium.com/wdstack/varying-column-heights-in-bootstrap-4e8dd5338643
+*/
+.row.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+/* Same as above
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+} */

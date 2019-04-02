@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Learning Plants</title>
+
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav-demo" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+        <a class="navbar-brand" href="#">Learning Plants</a>
+      </div>
+  
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        
+        <!-- 
+        The search for is positioned on navbar using navbar-left.
+        - Stackoverflow: Bootstrap NavBar with left, center or right aligned items
+        https://stackoverflow.com/questions/19733447/bootstrap-navbar-with-left-center-or-right-aligned-items
+         -->
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Signup</a></li>
+          <li><a href="#">Login</a></li>
+        </ul>
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+  </nav>
+
+  <!-- Notice when the window resize, the jumbotron and the grid system both go right up against the edge of the page.  Put the jumbotron and the grid system in "container" to maintain some space there. -->
+  <div class="container">
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Learning Plants</h1>
+        <p>Know more about plants</p>
+        <p><a class="btn btn-primary btn-lg" href="https://www.treehugger.com/lawn-garden/eat-dandelions-9-edible-garden-weeds.html" role="button">Learn more</a></p>
+      </div>
+    </div>
+
+    <!-- Grid System to lay out images.  Replace ln-65 w/ ln-66 , we see some images skip some columns. -->
+    <div class="flex">
+    <!-- <div class="row flex"> -->
+
+      <div class="col-lg-4 col-sm-6">
+        <!-- Whatever images put inside a thubmnail will be scaled into the thumbnail and have a nice border around it -->
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/dandelionedibleweed.jpg.860x0_q70_crop-scale.jpg">
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/purslaneedibleweed.JPG.860x0_q70_crop-smart.jpg">
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/redcloveredibleweeds.jpg.860x0_q70_crop-smart.jpg">
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/lambsquartersedibleweeds.jpg.860x0_q70_crop-smart.jpg">
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/plantainedibleweed.jpg.860x0_q70_crop-smart.jpg">
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/chickweededible.jpg">
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/mallowedibleweeds.jpg.860x0_q70_crop-smart.jpg">
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/pigweededible.jpg.860x0_q70_crop-smart.jpg">
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <img src="https://media.treehugger.com/assets/images/2014/03/curlydock.jpg.860x0_q70_crop-smart.jpg">
+        </div>
+      </div>
+      
+    </div><!-- /End of <div class="row"> -->
+
+  </div><!-- /End of <div class="container"> -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
