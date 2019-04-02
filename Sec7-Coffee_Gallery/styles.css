@@ -16,6 +16,11 @@ body {
 }
 
 
+.myFlex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 
 .navbar-inverse {
   background: #2c3e50;
