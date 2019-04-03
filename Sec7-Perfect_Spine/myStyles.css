@@ -1,0 +1,56 @@
+body {
+	/*margin-top: 100px;*/
+
+	background-image: url("spinal-health-correct-incorrect-posture-illustration.jpg");
+		/* Used if the image is unavailable */
+	background-color: lightblue;
+	/* Resize the background image to cover the entire container */
+	background-size: cover;
+	background-repeat: no-repeat;
+  /* Set starting position of a background image.
+  1st val: horizontal position. 2nd val: vertical position */
+	background-position: 0% -26%;
+}
+
+.navbar-inverse {
+	background-color: #13404D;
+}
+
+.navbar-brand {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+
+.container{
+	
+	/*margin-top: 5%;*/
+}
+
+h1 {
+	font-weight: 700;
+	font-size: 4em;
+}
+
+.content {
+	/* With .navbar-fixed-top, everything in body, including background image and 
+	.content, starts from top of body.  But the navbar doesn't start from the top 
+	of body.  So we need to add margin-top for .container to move it to our 
+	preferred location.   */
+	padding-top: 7%; 
+	text-align: center;
+
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+               0px 8px 13px rgba(0,0,0,0.1),
+               0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.btn-default {
+	background-color: #c8cace
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
