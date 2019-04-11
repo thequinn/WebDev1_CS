@@ -1,0 +1,45 @@
+body {
+	background-color: black;
+
+	margin: 0;
+	font-family: 'Nunito', sans-serif;
+	font-family: 'Roboto Mono', monospace;
+	font-family: 'Work Sans', sans-serif;
+}
+
+
+.square {
+	width: 30%;
+	background-color: purple;
+	padding-bottom: 30%;
+
+	float: left;
+	margin: 1.66%;
+}
+
+#container {
+	/*margin: 20% auto;*/
+	max-width: 600px;
+}
+
+h1 {
+	text-align: center;
+	line-height: 1.1;
+	font-weight: normal;
+	background-color: steelblue;
+	color: white;
+	margin: 0;
+	text-transform: uppercase;
+	padding: 20px 0;
+}
+
+#colorDisplay {
+	font-size: 200%;
+}
+
+#stripe {
+	background-color: white;
+	height: 30px;
+	text-align: center;
+	color: black;
+}
