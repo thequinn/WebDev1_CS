@@ -35,7 +35,6 @@ function setupModeButtons(){
 	for (var i = 0; i < modeButtons.length; i++){
 		modeButtons[i].addEventListener("click", function(){
 
-			// Remove .selected class from both Easy and Hard mode buttons, and add .selected class to the mode button selected.  So the right button is highlighted.
 			modeButtons[0].classList.remove("selected");
 			modeButtons[1].classList.remove("selected");
 			this.classList.add("selected");
@@ -67,9 +66,7 @@ function setupSquares() {
 
 function reset(){
 	colors = generateRandomColors(numSquares);
-	//pick a new random color from array
 	pickedColor = pickColor();
-	//change colorDisplay to match picked Color
 	colorDisplay.textContent = pickedColor;
 	resetButton.textContent = "New Colors"
 	messageDisplay.textContent = "";
@@ -81,13 +78,11 @@ function reset(){
 		if (colors[i]){
 			console.log("if, i: ", i);
 			squares[i].style.display = "block";
-			//console.log("i: ", i);
 			squares[i].style.background = colors[i];
 		}
 		// Easy mode:  colors[] only has the first 3 indices available with colors. So color[3~5] has no val's and goes to "else" here.
 		else {
 			console.log("else, i: ", i);
-			// Set squares[i] element to not be displayed
 			squares[i].style.display = "none";
 		}
 	}
@@ -114,11 +109,8 @@ function generateRandomColors(num){
 }
 
 function randomColor(){
-	//pick a "red" from 0 - 255
 	var r = Math.floor(Math.random() * 256);
-	//pick a "green" from  0 -255
 	var g = Math.floor(Math.random() * 256);
-	//pick a "blue" from  0 -255
 	var b = Math.floor(Math.random() * 256);
 	return "rgb(" + r + ", " + g + ", " + b + ")";
 }
