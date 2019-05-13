@@ -14,20 +14,15 @@ var campgrounds = [
 ];
 
 app.get('/', (req, res) => {
-  //res.send('Hello World!');
   res.render("landing.ejs");
 });
 
 app.get('/campgrounds', (req, res) => {
   console.log(campgrounds);  
-  // res.send("campgrounds", campgrounds);
-    // res.render("campgrounds.ejs");
     res.render("campgrounds.ejs", {campgrounds: campgrounds});
 });
 
 app.post('/campgrounds', (req, res) => {
-  console.log("req.body ===============> ", req.body);
-  console.log("res.body ===============> ", res.body);
 
   var newCampground = {
     name: req.body.name,
@@ -35,9 +30,7 @@ app.post('/campgrounds', (req, res) => {
   };
   campgrounds.push(newCampground);
 
-  // res.send("YOU HIT THE POST ROUTE!");
   res.render("campgrounds.ejs", {campgrounds: campgrounds});
-  //res.redirect("/campgrounds");
 });
 
 app.get('/campgrounds/new', (req, res) => {
