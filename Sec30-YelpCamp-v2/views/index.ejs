@@ -1,0 +1,54 @@
+˚˚<% include partials/header %>
+
+<div class="container">
+    <!-- The <header> element represents a container for introductory content or a set of navigational links. -->
+    <header class="jumbotron">
+        <!--
+        Notice when the window resize, the text in the jumbotron goes against
+        the edge of the page.  Add "container" right insidevthe jumbotron to
+        maintain some space there.
+        -->
+        <div class="container">
+            <h1>Welcome To YelpCamp!</h1>
+            <p>View our hand-picked campgrounds from all over the world</p>
+            <p>
+            <a class="btn btn-primary btn-large" href="/campgrounds/new">Add New Campground</a>
+            </p>
+        </div>
+    </header><!-- /End of <header class="jumbotron"> -->
+
+     <!--
+     Notice!!
+     - When img's have diff width and heights, the images might skip some columns in the grid.
+     - To fix the problem, we add the ln below to make the grid of the campground images to adapt to images that have diff height and width.
+
+         style="display:flex; flex-wrap: wrap;
+     -->
+     <!--
+     To make the captions of the thumbnails center in the grid, use "text-center"
+     -->
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% campgrounds.forEach(function(campground){ %>
+            <!--
+            class="col-md-3 col-sm-6"
+            - makes the webpage responsive.  So when the page is wide, we display more images in a row, but when apge is narrow, it displays less images.
+            -->
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                   <!-- Add image -->
+                   <img src="<%= campground.image %>">
+                   <!-- Add caption for the thumbnail -->
+                   <div class="caption">
+                       <h4><%= campground.name %></h4>
+                   </div>
+                   <p>                                                          
+                    <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info</a>                            
+                   </a>
+                  </p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<% include partials/footer %>
