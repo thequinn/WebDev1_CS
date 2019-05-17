@@ -2,69 +2,13 @@ var express     = require("express");
 var app         = express();
 var bodyParser  = require("body-parser");
 var mongoose = require("mongoose");
-var Campground = require("./models/campgrounds");
+var Campground = require("./models/campground");
 var seedDB = require("./seeds");
 
 mongoose.connect("mongodb://localhost/yelp_camp",{useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-
-// SCHEMA SETUP
-// var campgroundSchema = new mongoose.Schema({
-//    name: String,
-//    image: String,
-//    description: String
-// });
-
-// var Campground = mongoose.model("Campground", campgroundSchema);
-
 seedDB();
-
-// Campground.create(
-//   {
-//     name: "Salmon Creek", 
-//     image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"
-//   }, function(err, campground) {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log("Newly Created Campground: \n", campground);
-//     }
-// });
-
-// Campground.create(
-//     {
-//         name: "Granite Hill", 
-//         image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"
-//     }, function(err, campground) {
-//       if (err) {
-//           console.log(err);
-//       } else {
-//           console.log("Newly Created Campground: \n", campground);
-//       }
-//   });
-
-// Campground.create(
-//   {
-//     name: "Mountain Goat's Rest", 
-//     image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"
-//   },
-//   function(err, newCampground) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log("NEWLY CAMPGROUND ADDED: \n", newCampground);
-//     }
-//   });
-
-// var campgrounds = [
-//   { name: "Salmon Creek", 
-//     image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
-//   { name: "Granite Hill", 
-//     image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"},
-//   { name: "Mountain Goat's Rest", 
-//     image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"},
-// ];
 
 app.get("/", function(req, res){
     res.render("landing");
@@ -108,12 +52,12 @@ app.get("/campgrounds/new", function(req, res){
 // SHOW route - shows more info about one campground
 app.get("/campgrounds/:id", function(req, res){
     //find the campground with provided ID
-    Campground.findById(req.params.id, function(err, foundCampground){
+    Campground.findById(req.params.id).populate('comments').exec(function(err, foundCampground) {
         if(err){
-            console.log(err);
+          console.log(err);
         } else {
-            //render show template with that campground
-            res.render("show", {campground: foundCampground});
+          console.log(foundCampground);
+          res.render("show", {campground: foundCampground});
         }
     });
 });
