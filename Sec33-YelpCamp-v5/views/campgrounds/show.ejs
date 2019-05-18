@@ -1,0 +1,53 @@
+<% include ../partials/header %>
+<div class="container">
+
+  <div class= "row">
+      <div class ="col-md-3">
+        <p class="lead">YelpCamp</p>
+        <ul class="list-group">
+            <li class="list-group-item active">Pictures</li>
+            <li class="list-group-item">Documents</li>        
+            <li class="list-group-item">Music</li>
+            <li class="list-group-item">Videos</li>
+        </ul>
+      </div>
+      <div class ="col-md-9">
+        <div class="thumbnail">
+          <img src="<%= campground.image %>">
+          <div class="caption-f>
+              <!--
+              class="pull-right"
+              - float an element to the left or right with class pull-left 
+                or pull-right
+              -->
+              <h4 class="pull-right">$9.00/night</h4>
+              <!-- This <h4> will be on the same line as the last <h4> -->
+              <h4><a><%=campground.name%></a></h4>
+              
+              <p><%= campground.description %></p>
+          </div>          
+        </div>
+        <div class="well">
+          <div class="text-right">
+            <a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-info" role="button">
+               Add New Comment
+             </a>
+            </div>
+          <hr>
+
+          <% campground.comments.forEach(function(comment){ %>
+            <div class="row">
+                <div class="col-md-12">
+                    <strong><%= comment.author %></strong>
+                    <span class="pull-right">3 days ago</span>
+                    <p><%= comment.text %></p>
+                </div>
+            </div>
+          <% }) %>
+        </div>
+        
+      </div>
+  </div>
+
+</div>
+<% include ../partials/footer %>
