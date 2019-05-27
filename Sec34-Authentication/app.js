@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 
 const passport = require("passport");
-// const LocalStrategy = require("passport-local"),
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const User = require("./models/user");
@@ -29,7 +28,6 @@ app.use(passport.session());
 
 mongoose.connect('mongodb://localhost/AuthDemo', {useNewUrlParser: true});
 
-// passport.use(new LocalStrategy(User.authenticate()));
 passport.use(User.createStrategy());
 
 passport.serializeUser(User.serializeUser());
