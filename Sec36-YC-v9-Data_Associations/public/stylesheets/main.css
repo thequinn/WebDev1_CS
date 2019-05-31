@@ -1,0 +1,14 @@
+/* Make the image take up the whole space of the thumbnail */
+.thumbnail img {
+    width: 100%;
+}
+
+/* Remvoe the padding around the thumbnail */
+.thumbnail {
+    padding: 0;
+}
+
+/* Add 9px of padding to top, right, left and bottom */
+.thumbnail .caption-full {
+    padding: 9px;
+}

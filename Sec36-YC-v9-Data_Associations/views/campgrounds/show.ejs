@@ -17,14 +17,12 @@
                     <h4><a><%=campground.name%></a></h4>
 
                     <p><%= campground.description %></p>
+                    <p>Submitted by <%= campground.author.username %></p>
                 </div>
             </div>
 
             <div class="well">
-                <div class="text-right">
-                    <!--
-                    campground._id is passed as params in URL
-                    -->
+                <div class="text-right">            
                     <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
                 </div>
                 <hr>
