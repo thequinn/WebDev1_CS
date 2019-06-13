@@ -102,7 +102,7 @@ Each Campground has:
   - Note: Compare how id+username are saved in a different way in v8 and v9
 
 -v10
-# Editing Campgrounds
+#Editing Campgrounds
 * Add Method-Override
 * Add Edit Route for Campgrounds
 * Add Link to Edit Page
