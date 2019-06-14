@@ -40,7 +40,7 @@ router.post("/", isLoggedIn, function(req, res){
   // Replaced by ln-33 ~ ln-36
   //newCampground.author.id = req.user._id;
   //newCampground.author.username = req.user.username;
-
+  
   Campground.create(newCampground, function(err, newlyCreated){
     if(err){
       console.log(err);
@@ -71,12 +71,10 @@ router.get("/:id/edit", checkCampgroundOwnership, function(req, res) {
 
 // UPDATE route
 router.put("/:id", checkCampgroundOwnership, function(req, res){
-  //console.log("req.body has a campground obj:", req.body);
   Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, foundCampground) {
     if (err) {
       res.redirect("/campgrounds");
     } else {
-      //console.log("campground.js - foundCampground:", foundCampground);  
       res.redirect("/campgrounds/" + req.params.id);
     }
   });

@@ -9,6 +9,7 @@ var express     = require("express"),
     LocalStrategy = require('passport-local'),
     User        = require("./models/user"),
     methodOverride = require('method-override');
+const ejsLint = require('ejs-lint');
 
 //requring routes
 var commentRoutes    = require("./routes/comments"),
