@@ -56,10 +56,6 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/", indexRoutes);
 
 
-// For running on cloud9:
-//app.listen(process.env.PORT, process.env.IP, function(err, req) {
-//
-// For running on localhost:
 app.listen("8080", "localhost", function(err) {
    console.log("The YelpCamp Server Has Started!");
 });
