@@ -1,11 +1,4 @@
-  var express     = require("express");
-
-/*
-Express Router:
-- A Router doesn't .listen() for requests on its own. It's useful for 
-  separating your application into multiple modules -- creating a Router in 
-  each module that the app can require() and .use() as middleware.
- */
+var express     = require("express");
 var router      = express.Router();
 
 var passport    = require("passport");
