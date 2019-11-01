@@ -74,6 +74,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
 
 // DESTROY route - Delete a particular campground
 
+// WRONG: router.delete("/:id/delete",......)
 router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
   Campground.findOneAndRemove(req.params.id, function(err, foundCampground) {
     if (err) {

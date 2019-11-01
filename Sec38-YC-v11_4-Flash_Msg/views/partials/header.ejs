@@ -31,9 +31,14 @@
     To prevent the flash msg displays across the whole window, we need to put the Bootstrap's Alert Component in a container.
     -->
     <div class=container>
-      
+      <!-- 
+      - If there is an error.  
+      - In this case, 'error' is always defined.  So check if it's empty or not to determine whether an error msg is loaded to the flash
+      -->
       <% if (error && error.length > 0) { %>
+        <!-- Use Bootstrap's Alert Components to style the color of the flash msg -->      
         <div class="alert alert-danger" role="alert">
+          <!-- flash msg set from res.locals.error in /app.js -->
           <%= error %>
         </div>
       <% } %>

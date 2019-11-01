@@ -41,6 +41,19 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;
+
+  /* res.locals
+  - https://expressjs.com/en/api.html#res.locals
+  - It's an obj for exposing request-level info such as the request path name, authenticated user, user settings, and so on.  
+  - res.locals properties are valid only for the lifetime of the request
+  - When we want to make a req's info accessable in the whole app, assign it to res.locals obj.
+  */
+
+  // - Adding req.flash() to res.locals obj, so the whole app can access it
+  // - Using the key "error" of req.flash to distinguish what msg val it is
+  //res.locals.message = req.flash("error"); 
+  //
+  // Distinguish error and success msgs w/ keys "error" and "success"
   res.locals.error = req.flash("error");
   res.locals.success = req.flash("success");
 
