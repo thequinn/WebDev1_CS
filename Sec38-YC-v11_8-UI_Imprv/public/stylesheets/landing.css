@@ -1,0 +1,166 @@
+
+body {
+  background-color: #000;
+}
+
+/* position the welcome text and view all campgrounds button */
+#landing-header {
+  /* 
+  Note:   
+  - A page can be view in x(left)-y(right)-z(depth) directions. 
+  -- z > 0: z comes forwards towards us
+  --- so this elem will layer on top of any elem's w/ z <= 0
+  
+  S1: Set the z-index to 1, so all of the elements inside the landing-header div will be in front of the background images 
+  */
+  z-index: 1;
+  /* S2: Set position to relative so we can use the z-index property; the default position value is static, which ignores z-index */
+  position: relative;
+
+  /* ------------------------------------------------------------------- */
+
+  /* S1: Use text-align to center our text and button "Horizontally" */
+  text-align: center;
+  /* S2: Use padding-top to center our contents(div's here) "Vertically" */
+  /* Since it's contents take up quite a bit of space we use 40vh (vh: view height) instead of 50, this way the content looks more visually centered. */
+  padding-top: 40vh;
+}
+
+#landing-header h1 {
+  color: #fff;
+}
+
+
+/* ======================================================================= */
+/* Animation Section: */
+
+/* Style the unordered list (ul's) */
+.slideshow { 
+  /* 
+  CSS Position property: Fixed
+  - The element is positioned relative to the browser window 
+  */
+  position: fixed; 
+
+  /* Fill the entire screen */
+  width: 100%;
+  height: 100%;
+
+  /* Position it in the top left corner of the screen*/
+  top: 0;
+  left: 0;
+
+  /* Set the z-index to 0 to keep the background images behind the rest of the page's content */
+  z-index: 0;
+
+  /* Hide the bullet points from the list's default styling */
+  list-style: none;
+  
+  /* Margin and padding are removed entirely */
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the list items (li's) */
+.slideshow li { 
+  width: 100%;
+  height: 100%;
+
+  /* 
+  CSS Position property: absolute
+  - The element is positioned relative to its first positioned (not static) ancestor element.  And we know the ancestor of this li is ul */
+  position: absolute;
+  
+  top: 0;
+  left: 0;
+
+  /* Allows the background img to take up the entire space of the page */
+  background-size: cover;
+  /* Center the background img on the page */
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+
+  /* Set opacity perp to 0 b/c we want our img to start faded out before we use the animation to slowly fade into 1 */
+  opacity: 0;
+
+  z-index: 0;
+
+  /* 
+  - Add an animation to an element
+  - We have an animation named imageAnimation that lasts for 50s, keeps linear timing	(the whole animation runs at the same speed), and loops an infinite number of times 
+  */
+  animation: imageAnimation 50s linear infinite; 
+}
+
+/*
+- Add a background img to each li. 
+- The last four li's need an animation-delay so they all fire off one after the other in ten sec intervals.
+*/
+.slideshow li:nth-child(1) { 
+  /* Instead of using http addr for url(), we can link an img locally as putting the img in the public dir or image dir  */
+  background-image: url(http://i.imgur.com/K3mPv14.jpg) 
+}
+.slideshow li:nth-child(2) { 
+  background-image: url(http://i.imgur.com/SBEmFpv.jpg);
+  animation-delay: 10s; 
+}
+.slideshow li:nth-child(3) { 
+  background-image: url(http://i.imgur.com/emvhOnb.jpg);
+  animation-delay: 20s; 
+}
+.slideshow li:nth-child(4) { 
+  background-image: url(http://i.imgur.com/2LSMCmJ.jpg);
+  animation-delay: 30s; 
+}
+.slideshow li:nth-child(5) { 
+  background-image: url(http://i.imgur.com/TVGe0Ef.jpg);
+  animation-delay: 40s; 
+}
+
+
+/* 
+SIMPLE EXPLAINATION FOR THIS PART:
+-  0% ~ 10%: OPACITY 0 ~ 1
+  10% ~ 20%: OPACITY STAYS 1 ~ 1 
+  20% ~ 30%: OPACITY 1 ~ 0
+  (See Animation-Fade_in_and_out.png)
+
+
+Create the keyframes for the animation: 
+- The animation will be named imageAnimation, which matches with the value from our animation property in the .slideshow (unordered list) rule
+
+- From 0% to 10% (the beginning of our animation) the list item begins changing it's opacity from 0 to 1 (invisible to visible)
+
+- The animation-timing-function is set to ease-in at 0% and ease-out and 10%, this makes for a more smooth fade-in (See: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function)
+
+- The list item's opacity then stays at 1 until it reaches 20% at which point it fades back out, reaching 0 at 30% and staying at 0 for the remainder of the animation
+
+- If we have 5 background images visible for 5 sec each, then the time it takes to fade the image in and keep it visible is 10 sec with a 5 sec crossfade/fadeout into the next image; The entire animation cycle for all 5 images takes 50 sec total
+
+- 100% divided by 5 is 20%, so each image's fadein and visibility should last 20% of the cycle; half of 20% is 10%, that is why our fade in is from 0% to 10%, then we keep it visible until 20% is reached and begin the fadeout from 20% to 30%, the 5 sec fadeout overlaps the next image's 5 sec fadein, which is what creates the crossfade effect.
+
+- "animation-timing-function: ease-in;" and "animation-timing-function: ease-out;" give more smooth trandisition to fade from opacity 0 ~ 1
+*/
+@keyframes imageAnimation { 
+  0% { 
+    opacity: 0; 
+    animation-timing-function: ease-in;
+  }
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    opacity: 1
+  }
+  30% {
+    opacity: 0
+  }
+}
+
+
+
+/* Add older browser support - .no-cssanimations class added by modernizr */
+.no-cssanimations .slideshow li {
+	opacity: 1;
+}
