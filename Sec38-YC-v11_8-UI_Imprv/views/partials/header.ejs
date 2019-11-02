@@ -3,76 +3,92 @@
     <head>
       <!-- Make site responsive on mobile/tablet. A smaller screen will be able to use the collapsed menu. -->
       <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
       <title>YelpCamp</title>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">       
+      
+      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      
       <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
-
-    <!-- <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">YelpCamp</a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
- 
-                <% if(!currentUser){ %>
-                  <li><a href="/login">Login</a></li>
-                  <li><a href="/register">Sign Up</a></li>
-                <% } else { %>
-                  <li><a href="#">Signed In as <%= currentUser.username %></a></li>
-                  <li><a href="/logout">Logout</a></li>
-                <% } %>
- 
-                </ul>
-            </div>
-        </div>
-    </nav> -->
-
+    
     <!-- Update the nav-bar menu (Replaced the code above) -->
     <nav class="navbar navbar-default">
-        <div class="container">
+      <div class="container">
 
-            <!-- allows us to turn the menu into a dropdown whenever the site is viewed on a smaller screen (e.g., phone or tablet). Before this can work we will need to (1)add a meta tag in our header partial, then (2) add jQuery and Bootstrap's JavaScript file to the footer partial  -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-    
-                <a class="navbar-brand" href="/">YelpCamp</a>
-            </div>
+        <!-- allows us to turn the menu into a dropdown whenever the site is viewed on a smaller screen (e.g., phone or tablet). Before this can work we will need to (1)add a meta tag in our header partial, then (2) add jQuery and Bootstrap's JavaScript file to the footer partial  -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
 
-            <div id="navbar" class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
-                <!-- 
-                The ternary operator says "if there is a local variable named page and it is equal to the string 'campgrounds' then give this list item a class of 'active' otherwise (else) don't give it any class at all.
-                -->
-                <li class="<%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>"><a href="/campgrounds">Home</a></li>
-              </ul>
-
-              <ul class="nav navbar-nav navbar-right">
-                  <% if(!currentUser){ %>
-                      <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login">Login</a></li>
-                      <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a></li>
-                  <% } else { %>
-                      <li><a href="#">Signed In As <%= currentUser.username %></a></li>
-                      <li><a href="/logout">Logout</a></li>
-                  <% } %>
-              </ul>
-            </div>
+          <a class="navbar-brand" href="/">YelpCamp</a>
         </div>
+
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <!-- 
+            The ternary operator says "if there is a local variable named page and it is equal to the string 'campgrounds' then give this list item a class of 'active' otherwise (else) don't give it any class at all.
+            -->
+            <li class="<%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>"><a href="/campgrounds">Home</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <% if(!currentUser){ %>
+              <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login">Login</a></li>
+              <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a></li>
+            <% } else { %>
+              <li><a href="#">Signed In As <%= currentUser.username %></a></li>
+              <li><a href="/logout">Logout</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
     </nav>
 
+    <!-- <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <a class="navbar-brand" href="/">YelpCamp</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="<%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>"><a href="/campgrounds">Home</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if(!currentUser){ %>
+              <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login">Login</a></li>
+              <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a></li>
+            <% } else { %>
+              <li><a href="#">Signed In As <%= currentUser.username %></a></li>
+              <li><a href="/logout">Logout</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav> -->
+
+    <!-- 
+    Since the flash msg displays across the whole window, we need to put the 
+    Bootstrap's Alert Component in a container.
+    -->
     <div class="container">
-        <!-- msgError and msgError are added to res.locals in app.js -->
+
         <% if(msgError && msgError.length > 0){ %>
+          <!-- Use Bootstrap's Alert Components to style the color of the flash msg -->
           <div class="alert alert-danger" role="alert">
-            <%= msgError %>  
+            <%= msgError %>  <!-- flash msg -->
           </div>
         <% } %>
 
@@ -83,7 +99,6 @@
         <% } %>
 
     <div>
-
+   
     <!-- Use Bootstrap to Style the Login & Sign Up Views -->
     <div class="container">
-    
