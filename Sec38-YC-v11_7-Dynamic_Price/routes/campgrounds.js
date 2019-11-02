@@ -46,8 +46,9 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 // SHOW route - shows more info about one campground
 router.get("/:id", function(req, res){
   Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
-    if(err){
-      console.log(err);
+    if(err || !foundCampground){
+      req.flash("error", "Campground not found");
+      res.redirect("back"); 
     } else {
       res.render("campgrounds/show", {campground: foundCampground});
     }
@@ -58,18 +59,18 @@ router.get("/:id", function(req, res){
 //router.get("/campgrounds/:id/edit", function(req, res) {
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) {
   Campground.findById(req.params.id, function(err, foundCampground) {
-    res.render("campgrounds/edit", {campground: foundCampground}); 
+    res.render("campgrounds/edit", {campground: foundCampground});
   });
 });
 
-// UPDATE route - Update a particular campground, then redirect somewhere	  
+// UPDATE route - Update a particular campground, then redirect somewhere
 router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
   //console.log("req.body has a campground obj:", req.body);
   Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, foundCampground) {
     if (err) {
       res.redirect("/campgrounds");
     } else {
-      //console.log("campground.js - foundCampground:", foundCampground);  
+      //console.log("campground.js - foundCampground:", foundCampground);
       res.redirect("/campgrounds/" + req.params.id);
     }
   });
