@@ -65,5 +65,5 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/", indexRoutes);
 
 app.listen("8080", "localhost", function(err) {
-   console.log("The YelpCamp Server Has Started!");
+   console.log("The YelpCamp Server Has Started");
 });
