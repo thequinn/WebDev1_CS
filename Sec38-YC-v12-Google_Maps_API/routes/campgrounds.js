@@ -5,16 +5,25 @@ var express     = require("express"),
 
 var middleware = require("../middleware");
 
-// Reqiure the Node library for geocoding.  This is a middleware.
+// Using node-geocoder middleware for Google Maps
+/*
+Since we can't access .env file directly (ln-20 here), how to use .env file to store the GeoCoder API Key?
+- Using "dotenv module" that loads environment var from a .env file into process.env.
+==> Setup: 
+1) require('dotenv').config();  Put it in your app (server) as early as possible.
+2) Create a .env file in the root directory of your project.
+3) By 2), process.env has everything you defined in your .env file.  To use node-deocoder module, do the setup below
+*/
 var NodeGeocoder = require('node-geocoder');
-// 
 var options = {
   provider: 'google',
   httpAdapter: 'https',
-  // We can put our API key here, but to be save, put the key in .env
+  
   apiKey: process.env.GEOCODER_API_KEY,
+  //apiKey: "AIzaSyA1gZYqRLXv8hAX4ntXYEXrBUJasVGaPaA",
+
   formatter: null
-};
+}; 
 var geocoder = NodeGeocoder(options);
 
 
@@ -24,8 +33,7 @@ router.get("/", function(req, res){
     if(err){
       console.log(err);
     } else {
-      // Update the nav-bar menu by adding 3rd arg.  See <nav> in header.js
-      res.render("campgrounds/index", {campgrounds: allCampgrounds, page: 'campgrounds'});
+      res.render("campgrounds/index", {campgrounds:allCampgrounds});
     }
   });
 });
@@ -35,80 +43,61 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
    res.render("campgrounds/new.ejs");
 });
 
-//==============================================================================
-// CREATE route - add new campground to DB
-// router.post("/", middleware.isLoggedIn, function(req, res){
-//   var name = req.body.name;
-//   var price = req.body.price;
-//   var image = req.body.image;
-//   var desc = req.body.description;
-
-//   var author = {
-//       id: req.user.id,
-//       username: req.user.username
-//   }
-//   var newCampground = {name: name, price: price, image: image, description: desc, author: author}
-
-//   Campground.create(newCampground, function(err, newlyCreated){
-//     if(err){
-//       console.log(err);
-//     } else {
-//       res.redirect("campgrounds");
-//     }
-//   });
-// });
-
-// (Replace the last CREATE route by this one)
 //CREATE route - add new campground to DB
 router.post("/", middleware.isLoggedIn, function(req, res){
-  console.log("-----> req.body:\n", req.body);
-  console.log("-----> req.user:\n", req.user);
-
   // get data from form and add to campgrounds array
   var name = req.body.name;
   var image = req.body.image;
   var desc = req.body.description;
   var author = {
-      id: req.user._id,  
+      id: req.user._id,
       username: req.user.username
   }
 
+  // Use node-geocode middleware to convert between an address and a LatLng.
   geocoder.geocode(req.body.location, function (err, data) {
+    //console.log("req.body.location: \n", req.body.location, "\n");
+
     if (err || !data.length) {
+      console.log(err);
       req.flash('error', 'Invalid address');
       return res.redirect('back');
     }
+
+    // Get campground coordinate
     var lat = data[0].latitude;
     var lng = data[0].longitude;
     var location = data[0].formattedAddress;
-    var newCampground = {name: name, image: image, description: desc, author:author, location: location, lat: lat, lng: lng};
 
-    // Create a new campground and save to DB
+    var newCampground = {name: name, image: image, description: desc, author:author, location: location, lat: lat, lng: lng};
+    
     Campground.create(newCampground, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
+            //redirect back to campgrounds page
             console.log(newlyCreated);
             res.redirect("/campgrounds");
         }
     });
   });
 });
-//==============================================================================
 
 // SHOW route - shows more info about one campground
 router.get("/:id", function(req, res){
   Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
+
     if(err || !foundCampground){
       req.flash("error", "Campground not found");
       res.redirect("back"); 
     } else {
+      console.log("foundCampground:", foundCampground);
       res.render("campgrounds/show", {campground: foundCampground});
     }
   });
 })
 
-// EDIT route - show edit form for one campground
+// EDIT route - v.2
 //router.get("/campgrounds/:id/edit", function(req, res) {
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) {
   Campground.findById(req.params.id, function(err, foundCampground) {
@@ -116,25 +105,11 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) 
   });
 });
 
-//==============================================================================
-// UPDATE route - Update a particular campground, then redirect somewhere
-// router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
-//   //console.log("req.body has a campground obj:", req.body);
-//   Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, foundCampground) {
-//     if (err) {
-//       res.redirect("/campgrounds");
-//     } else {
-//       //console.log("campground.js - foundCampground:", foundCampground);
-//       res.redirect("/campgrounds/" + req.params.id);
-//     }
-//   });
-// });
-
-// (Replace the last UPDATE route by this one)
-// UPDATE route - Update a particular campground, then redirect somewhere
+// UPDATE route - Update a particular campground
 router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
   geocoder.geocode(req.body.location, function (err, data) {
     if (err || !data.length) {
+      console.log(err)
       req.flash('error', 'Invalid address');
       return res.redirect('back');
     }
@@ -148,16 +123,19 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
             res.redirect("back");
         } else {
             req.flash("success","Successfully Updated!");
-            res.redirect("/campgrounds/" + campground._id);  
+            res.redirect("/campgrounds/" + campground._id);
         }
     });
   });
 });
-//==============================================================================
 
 // DESTROY route - Delete a particular campground
+
+// WRONG: router.delete("/:id/delete",......)
 router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
-  Campground.findOneAndRemove(req.params.id, function(err, foundCampground) {
+
+  // findOneAndRemove(...); removed a wrong campground
+  Campground.findByIdAndRemove(req.params.id, function(err, foundCampground) {
     if (err) {
       console.log("err");
       res.redirect("/campgrounds");

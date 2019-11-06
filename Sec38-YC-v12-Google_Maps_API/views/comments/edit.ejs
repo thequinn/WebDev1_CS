@@ -1,15 +1,11 @@
 <% include ../partials/header %>
 
-<!-- <div class="container"> --><!-- Moved to header.ejs -->
+<div class="container">
     <div class="row">
         <h1 style="text-align: center">Add a New Comment</h1>
         <div style="width: 30%; margin: 25px auto;">
             <form action="/campgrounds/<%= campgroundId %>/comments/<%= comment._id %>?_method=PUT" method="POST">
-                <div class="form-group">
-                  <!-- 
-                  name attr: pass comment[text] or comment.text w/ the form to the svr
-                  value attr: display the comment.text value in this form/view/template
-                  -->
+                <div class="form-group">            
                   <input class="form-control" type="text" name="comment[text]" value="<%= comment.text %>">
                 </div>
                 <div class="form-group">
@@ -19,6 +15,6 @@
             <a href="/campgrounds">See all campgrounds</a>
         </div>
     </div>
-<!-- <div class="container"> --><!-- Moved to header.ejs -->
+</div>
 
 <% include ../partials/footer %>

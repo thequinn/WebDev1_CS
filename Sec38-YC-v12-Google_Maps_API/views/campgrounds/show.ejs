@@ -1,90 +1,97 @@
 <% include ../partials/header %>
-<!-- <div class="container"> --><!-- Moved to header.ejs -->
-    <div class="row">
-        <div class="col-md-3">
-            <p class="lead">YelpCamp</p>
-            <div class="list-group">
-              <li class="list-group-item active">Info 1</li>
-              <li class="list-group-item">Info 2</li>
-              <li class="list-group-item">Info 3</li>
-            </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <p class="lead">YelpCamp</p>
+      <div class="list-group">
+          <li class="list-group-item active">Info 1</li>
+          <li class="list-group-item">Info 2</li>
+          <li class="list-group-item">Info 3</li>
+      </div>
 
-            <!-- ln-9 will select this div and use it to generate the map.  Also, we MUST style the div in main.css, otherwise we won't be able to see it!! -->
-            <div id="map"></div>
+      <!-- The <script> below will select this div and use it to generate the map.  Also, we MUST style the zise of the div in main.css, otherwise we won't be able to see it!! -->
+      <div id="map"></div>
+    </div>
 
+    <div class="col-md-9">
+      <div class="thumbnail">
+        <img class="img-responsive" src="<%= campground.image %>">
+        <div class="caption-full">
+          <h4 class="pull-right">$9.00/night</h4>
+          <h4><a><%=campground.name%></a></h4>
+          <p><%= campground.description %></p>
+          <p><em>Submitted by <%= campground.author.username %></p>
+     
+          <!-- 
+          Error: Cannot read property 'equals' of undefined
+          - It may indicate that the 'author' field doesn't exist for some of your campgrounds. Make sure to clear your database in order to delete the old campgrounds/comments that were created before the author feature was implemented,
+          -->
+          <% if ( currentUser && campground.author.id.equals(currentUser._id) ) { %>
+            <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-xs btn-warning">Edit</a>
+
+            <form id="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE", method="POST">
+              <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+            </form>
+
+          <% } %>
         </div>
-        <div class="col-md-9">
-            <div class="thumbnail">
-              <img class="img-responsive" src="<%= campground.image %>">
-              <div class="caption-full">
-                <h4 class="pull-right">$<%= campground.price %> /night</h4>
-                <h4><a><%=campground.name%></a></h4>
-                <p><%= campground.description %></p>
-                <p><em>Submitted by <%= campground.author.username %></p>
+      </div>
 
-                <% if ( currentUser && campground.author.id.equals(currentUser._id) ) { %>
-                  <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-xs btn-warning">Edit</a>
+      <div class="well">
+        <div class="text-right">
+          <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+        </div>
+        <hr>
 
-                  <form id="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE", method="POST">
-                    <input type="submit" class="btn btn-xs btn-danger" value="Delete">
-                  </form>
-
-                <% } %>
-              </div>
-            </div>
-         
-            <div class="well">
-                <div class="text-right">
-                  <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
-                </div>
-                <hr> 
-                
-                <% campground.comments.forEach(function(comment){ %>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <strong><%= comment.author.username %></strong>
-                      <span class="pull-right">10 days ago</span>
-                      <p><%= comment.text %></p>
-                    
-                      <% if ( currentUser && comment.author.id.equals(currentUser._id) ) { %>
-                        <a href="/campgrounds/<%= campground._id  %>/comments/<%= comment._id %>/edit" class="btn btn-xs btn-warning">Edit</a>
-
-                        <!-- A DELETE req is sent by a form -->
-                        <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/delete?_method=DELETE", method="POST">
-                          <input type="submit" class="btn btn-xs btn-danger" value="Delete">
-                        </form>
-                      <% } %>
-                      
-                    </div>
-                  </div>
-                <% }) %>
-            </div>  
+        <% campground.comments.forEach(function(comment){ %>
+          <div class="row">
+            <div class="col-md-12">
+              <strong><%= comment.author.username %></strong>
+              <span class="pull-right">10 days ago</span>
+              <p><%= comment.text %></p>
             
-        </div>  
-    </div>  
-<!-- </div> --><!-- Moved to footer.ejs --> 
+              <% if ( currentUser && comment.author.id.equals(currentUser._id) ) { %>
+                <a href="/campgrounds/<%= campground._id  %>/comments/<%= comment._id %>/edit" class="btn btn-xs btn-warning">Edit</a>
 
-<!-- 
-Add Google Maps scripts to your application 
-- be sure to replace API-KEY-HERE with the first key (with restrictions) that you created earlier
--->
+                <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE", method="POST">
+                  <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                </form>
+              <% } %>
+
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add Google Maps scripts to your application  -->
 <script>
   function initMap() {
-    // The coordinate of curr location
-    var lat = <%= campground.lat %>;
-    var lng = <%= campground.lng %>;
+    // To store & parse  ejs template variables into  normal JS variables, you are required to utilize the template tag literals.
+    // - https://stackoverflow.com/questions/46539106/accessing-passed-ejs-variable-in-javascript-file
+    // - To avoid unexpected type coercion errors caused by parsing, we need  to explicitly convert the values into floating point numbers (because google maps API expects those values to be of this type.
+    //
+    //var lat = <%= campground.lat %>;
+    //var lng = <%= campground.lng %>;
+    //
+    //var lat = "<%= campground.lat %>";
+    //var lng = "<%= campground.lng %>";
+    //
+    var lat = parseFloat('<%= campground.lat %>');
+    var lng = parseFloat('<%= campground.lng %>');
+
     var center = {lat: lat, lng: lng };
 
     // google.maps.Map()class
-    // - https://developers.google.com/maps/documentation/javascript/reference/map
     // - Creates a new map inside of the given HTML container, which is typically a DIV element.  Also set the map's center location.
-    //
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: center,
         scrollwheel: false
     });
-
     var contentString = `
       <strong><%= campground.name %><br />
       <%= campground.location %></strong>
@@ -104,7 +111,6 @@ Add Google Maps scripts to your application
     });
 
     // - Typically you will attach an info window to a marker, but you can also attach an info window to a specific latitude/longitude
-    //
     marker.addListener('click', function() {
       infowindow.open(map, marker);
     });
@@ -114,11 +120,12 @@ Add Google Maps scripts to your application
 <!-- 
 Add Google API Key 
 - Watch lect video @ 11:10 to explain the unrestricted and restricted API keys
+
 1) Geocoder key (API key 1): unrestricted 
 - Used in backend (see GEOCODER_API_KEY in ln-15 /routes/campgrounds.js).  We take an addr and geocode it into a coordinate.  We can't put restriction on it, so use .env to store it to prevent outsiders to see it.
 2) YelpCamp key (API key 2): restricted
 - Used in frontend below.  It will be showed in the browser and source.  So we have to put restriction to say this key can only be used by the specified url's (set in the key's credential page of Google Cloud Platform.)
 -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXhshUJYX-xDMJWXwDP7_4X3MBi4hdrGM&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfIuEjNhhl414KiQWk8uU7mwO-eKG_rdE&callback=initMap"></script>
 
 <% include ../partials/footer %>

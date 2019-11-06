@@ -1,7 +1,7 @@
 {
-  "name": "package.json",
+  "name": "YelpCamp",
   "version": "1.0.0",
-  "description": "(1) Refactor Mongoose Code (2) Add seed file",
+  "description": "YelpCamp v10",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +16,7 @@
     "express": "^4.13.3",
     "express-session": "^1.15.6",
     "method-override": "^2.3.10",
-    "mongoose": "^5.7.7",
+    "mongoose": "^5.6.0",
     "node-geocoder": "^3.25.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",

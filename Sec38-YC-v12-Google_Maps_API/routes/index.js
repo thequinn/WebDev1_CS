@@ -7,63 +7,67 @@ router.get("/", function(req, res){
   res.render("landing");
 });
 
-// show register form
+// Show register form
 router.get("/register", function(req, res){
-  // Update the nav-bar menu by adding 2nd arg.  See <nav> in header.js
-  res.render("register", {page: 'register'}); 
+  res.render("register");
 });
 
-//handle sign up logic
+// Handle sign up logic
 router.post("/register", function(req, res){
    var newUser = new User({username: req.body.username});
    User.register(newUser, req.body.password, function(err, user){
-    if(err){
-      // Fix registration flash message bug:
-      // - Currently, when you register a new user with an existing username, the app should reload the register view and display a flash message. But the flash message doesn't appear unless you reload the register page a second time, or navigate to another page.
-      //
-      // WRONG!
-      // req.flash("error", err.message);
-      // return res.render("register");
-      //
-      // Correct:
-      console.log(err); // Print err to server
-      return res.render("register", {error: err.message});
-    }
-    passport.authenticate("local")(req, res, function(){
-      req.flash("success", "Welcome to YelpCamp " + user.username);
-      res.redirect("/campgrounds"); 
-    });
+      if(err){  // err comes back from Mongoose
+
+        /***** NEWLY ADDED *****/
+        req.flash("error", err.message); // err is an obj
+        // console.log(err);
+
+        /*
+        - Problem: Flash msg displays on the page after the rendered page.  
+        - Fix: connect-flash is intended to display msgs on the next req.  If your code generates msgs in the same req, simply pass the msgs to the view model directly.  
+        */
+        // return res.render("register"); // WRONG !!
+        //
+        return res.redirect("/register"); // Correct
+      }
+      passport.authenticate("local")(req, res, function(){
+        /***** NEWLY ADDED *****/
+        req.flash("success", "Welcome to YelpCamp" + user.username);
+        res.redirect("/campgrounds");
+      });
    });
 });
 
 /* LOGIN ROUTES */
 
-// show login form
+// Show login form
 router.get("/login", function(req, res){
-  // Update the nav-bar menu by adding 2nd arg.  See <nav> in header.js
-  res.render( "login", {page: 'login'}); 
+
+  /***** NEWLY ADDED *****/
+  // Use the key, "error", to tell connect-flash which msg val to display.
+  // res.render("login", {message: req.flash("error")});
+  //
+  res.render('login'); 
 });
 
-router.post("/login", passport.authenticate("local", 
+// Handle login logic
+router.post("/login", passport.authenticate("local",
    {
-      successRedirect: "/campgrounds",
-      failureRedirect: "/login"
+       successRedirect: "/campgrounds",
+       failureRedirect: "/login"
    }), function(req, res){
 });
- 
+
 /* LOGOUT ROUTES */
 router.get("/logout", function(req, res){
   req.logout();
-  req.flash("error", "Logged you out");
+
+  /***** NEWLY ADDED *****/
+  // req.flash("error", "Logged out successfully");  // Red background
+  //
+  // change background from red to green in /views/partials/header.ejs
+  req.flash("success", "Logged out successfully");  
   res.redirect("/campgrounds");
 });
-
-
-function isLoggedIn(req, res, next) {
-  if(req.isAuthenticated()){
-      return next();
-  }
-  res.redirect("/login");
-};
 
 module.exports = router;
