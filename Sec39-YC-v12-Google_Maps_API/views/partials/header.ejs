@@ -28,25 +28,23 @@
     </nav>
 
     <!-- 
-    To prevent the flash msg displays across the whole window, we need to put the Bootstrap's Alert Component in a container.
+    Since the flash msg displays across the whole window, we need to put the 
+    Bootstrap's Alert Component in a container.
     -->
-    <div class=container>
-      <!-- 
-      - If there is an error.  
-      - In this case, 'error' is always defined.  So check if it's empty or not to determine whether an error msg is loaded to the flash
-      -->
-      <% if (error && error.length > 0) { %>
-        <!-- Use Bootstrap's Alert Components to style the color of the flash msg -->      
-        <div class="alert alert-danger" role="alert">
-          <!-- flash msg set from res.locals.error in /app.js -->
-          <%= error %>
-        </div>
-      <% } %>
-      
-      <% if (success && success.length > 0) { %>
-        <div class="alert alert-success" role="alert">        
-          <%= success %>
-        </div>
-      <% } %>
+    <div class="container">
 
-    </div>
+        <% if(msgError && msgError.length > 0){ %>
+          <!-- Use Bootstrap's Alert Components to style the color of the flash msg -->
+          <div class="alert alert-danger" role="alert">
+            <%= msgError %>  <!-- flash msg -->
+          </div>
+        <% } %>
+
+        <% if(msgSuccess && msgSuccess.length > 0){ %>
+          <div class="alert alert-danger" role="alert">
+            <%= msgSuccess %> 
+          </div>
+        <% } %>
+
+    <div>
+    

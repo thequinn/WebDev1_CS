@@ -20,7 +20,6 @@ var options = {
   httpAdapter: 'https',
   
   apiKey: process.env.GEOCODER_API_KEY,
-  //apiKey: "AIzaSyA1gZYqRLXv8hAX4ntXYEXrBUJasVGaPaA",
 
   formatter: null
 }; 

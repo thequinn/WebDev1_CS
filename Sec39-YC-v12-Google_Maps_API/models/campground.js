@@ -1,7 +1,9 @@
 var mongoose = require("mongoose");
 
+// SCHEMA SETUP
 var CampgroundSchema = new mongoose.Schema({
   name: String,
+  price: String,
   image: String,
   description: String,
 
@@ -11,7 +13,9 @@ var CampgroundSchema = new mongoose.Schema({
 
   author: {
     id: {
+      // Add ObjectId to ref userSchema
       type: mongoose.Schema.Types.ObjectId,
+      // Add ref to the User model
       ref: "User"
     },
     username: String

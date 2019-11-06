@@ -4,24 +4,30 @@
     <div class="col-md-3">
       <p class="lead">YelpCamp</p>
       <div class="list-group">
-          <li class="list-group-item active">Info 1</li>
-          <li class="list-group-item">Info 2</li>
-          <li class="list-group-item">Info 3</li>
+        <li class="list-group-item active">Info 1</li>
+        <li class="list-group-item">Info 2</li>
+        <li class="list-group-item">Info 3</li>
       </div>
 
-      <!-- The <script> below will select this div and use it to generate the map.  Also, we MUST style the zise of the div in main.css, otherwise we won't be able to see it!! -->
+      <!-- 
+      - The <script> below will select this div and change it into a map.
+      
+      - 注意!! 
+      -- we MUST style the size of the div in main.css, otherwise we won't be able to see it!! 
+      
+      - Just put the div wherever you want the map to show up, and it will show up there.  
+      -->
       <div id="map"></div>
     </div>
-
     <div class="col-md-9">
       <div class="thumbnail">
         <img class="img-responsive" src="<%= campground.image %>">
         <div class="caption-full">
-          <h4 class="pull-right">$9.00/night</h4>
+          <h4 class="pull-right">$<%= campground.price %> /night</h4>
           <h4><a><%=campground.name%></a></h4>
           <p><%= campground.description %></p>
           <p><em>Submitted by <%= campground.author.username %></p>
-     
+
           <!-- 
           Error: Cannot read property 'equals' of undefined
           - It may indicate that the 'author' field doesn't exist for some of your campgrounds. Make sure to clear your database in order to delete the old campgrounds/comments that were created before the author feature was implemented,
@@ -32,17 +38,16 @@
             <form id="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE", method="POST">
               <input type="submit" class="btn btn-xs btn-danger" value="Delete">
             </form>
-
           <% } %>
         </div>
       </div>
-
+    
       <div class="well">
         <div class="text-right">
           <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
         </div>
-        <hr>
-
+        <hr> 
+        
         <% campground.comments.forEach(function(comment){ %>
           <div class="row">
             <div class="col-md-12">
@@ -53,30 +58,33 @@
               <% if ( currentUser && comment.author.id.equals(currentUser._id) ) { %>
                 <a href="/campgrounds/<%= campground._id  %>/comments/<%= comment._id %>/edit" class="btn btn-xs btn-warning">Edit</a>
 
-                <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE", method="POST">
+                <!-- A DELETE req is sent by a form -->
+                <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/delete?_method=DELETE", method="POST">
                   <input type="submit" class="btn btn-xs btn-danger" value="Delete">
                 </form>
               <% } %>
-
+              
             </div>
           </div>
         <% }) %>
-      </div>
-
-    </div>
-  </div>
-</div>
+      </div>  
+          
+    </div>  
+  </div>  
+</div>  
 
 <!-- Add Google Maps scripts to your application  -->
 <script>
   function initMap() {
     // To store & parse  ejs template variables into  normal JS variables, you are required to utilize the template tag literals.
-    // - https://stackoverflow.com/questions/46539106/accessing-passed-ejs-variable-in-javascript-file
-    // - To avoid unexpected type coercion errors caused by parsing, we need  to explicitly convert the values into floating point numbers (because google maps API expects those values to be of this type.
+    // -(1) https://stackoverflow.com/questions/46539106/accessing-passed-ejs-variable-in-javascript-file
+    // -(2) To avoid unexpected type coercion errors caused by parsing, we need  to explicitly convert the values into floating point numbers (because google maps API expects those values to be of this type.
     //
+    // Ian's version is WRONG!
     //var lat = <%= campground.lat %>;
     //var lng = <%= campground.lng %>;
     //
+    // (2) above explains haing a string is not enough b/c of google API
     //var lat = "<%= campground.lat %>";
     //var lng = "<%= campground.lng %>";
     //
