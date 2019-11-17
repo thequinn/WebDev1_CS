@@ -151,6 +151,9 @@ Comment Destroy Route:    /campgrounds/:id/comments/:comment_id
 * Install and configure connect-flash
 * Add bootstrap alerts to header
 
+- v12 - Sec36
+#Dynamic_Price
+
 
 RESTFUL ROUTES
 
